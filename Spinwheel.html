@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drehendes Rad</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    #wheel-container {
+      position: relative;
+    }
+
+    #wheel {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 10px solid #3498db;
+      border-top-color: transparent;
+      animation: spin 5s infinite linear;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .entry {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      width: 2px;
+      height: 80px;
+      background-color: #3498db;
+      transform-origin: bottom;
+      transition: transform 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="wheel-container">
+    <div id="wheel"></div>
+  </div>
+  
+  <script>
+    let entryCount = 0;
+
+    function addEntry() {
+      entryCount++;
+      const entry = document.createElement('div');
+      entry.className = 'entry';
+      entry.style.backgroundColor = getRandomColor();
+      entry.style.transform = `translate(-50%, -50%) rotate(${360 / entryCount}deg)`;
+      document.getElementById('wheel-container').appendChild(entry);
+    }
+
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+  </script>
+
+  <button onclick="addEntry()">Neuen Eintrag hinzufügen</button>
+</body>
+</html>
